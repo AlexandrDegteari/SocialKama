@@ -1,23 +1,20 @@
 import React from "react";
 import p from './MyPosts.module.css'
 import Post from "./post/Post";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../Redax/State";
 
 
 const MyPosts = (props) => {
-    // debugger;
     let newPostElement = React.createRef();
-    let addPost = () => {
-        props.dispatch(addPostActionCreator());
+    let onAddPost = () => {
+        props.addPost();
     };
     let postsElement =
         props.posts.map(p => <Post message={p.message} id={p.id} likesCount={p.likesCount}/>);
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        // eslint-disable-next-line no-undef
-        let action = updateNewPostTextActionCreator(text);
-        props.dispatch(action);
-        console.log(text)
+        props.updateNewPostText(text)
+
+
     };
     return (
         <div className={p.postsBlock}>
@@ -27,7 +24,7 @@ const MyPosts = (props) => {
                     <textarea ref={newPostElement} onChange={onPostChange} value={props.newPostText}/>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
             </div>
             <div className={p.posts}>

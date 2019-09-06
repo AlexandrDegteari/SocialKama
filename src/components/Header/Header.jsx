@@ -5,7 +5,7 @@ import h from './Header.module.css'
 const Header = () => {
     return (
         <header className={h.header}>
-            <img src="../../assets/img/logo2.png" alt={'social'}/>
+            <img src="../../assets/img/logo.png" alt={'social'}/>
         </header>
 
     );

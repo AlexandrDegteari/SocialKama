@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from "./users.module.css";
 import {NavLink} from "react-router-dom";
+import * as axios from "axios";
 
 
 let Users = (props) => {
@@ -24,7 +25,7 @@ let Users = (props) => {
             props.users.map(u => <div key={u.id}>
             <span>
                 <div>
-                    <NavLink to={'/profile/' +u.id}>
+                    <NavLink to={'/profile/' + u.id}>
                     <img alt={'Naghiev'} src={u.photos.small != null ? u.photos.small :
                         "http://ib.tsu.ru/wp-content/uploads/2017/10/no-ava-300x300.png"}
                          className={styles.userPhoto}/>
@@ -33,32 +34,54 @@ let Users = (props) => {
                 <div>
                     {u.followed
                         ? <button onClick={() => {
-                            props.unFollow(u.id)
-                        }}>UnFollow</button>
+                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                withCredentials: true,
+                                headers: {
+                                    "API-KEY": '089ff49d-32c5-46ec-a8bb-409dbb994b7b'
+                                }
+                            })
+                                .then(response => {
+                                    if (response.data.resultCode === 0) {
+                                        props.unFollow(u.id);
+                                    }
+                                });
+                        }
+                        }>UnFollow</button>
                         : <button onClick={() => {
-                            props.follow(u.id)
-                        }}>Follow</button>}
 
+                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                withCredentials: true,
+                                headers: {
+                                    "API-KEY": '089ff49d-32c5-46ec-a8bb-409dbb994b7b'
+                                }
+                            })
+                                .then(response => {
+                                    if (response.data.resultCode === 0) {
+                                        props.follow(u.id);
+                                    }
+                                });
+
+                        }}>Follow</button>}
                 </div>
-            </span>
+                        </span>
                     <span>
-                <span>
-                   <div>
-                       {u.name}
-                   </div>
-                    <div>
+                        <span>
+                        <div>
+                        {u.name}
+                        </div>
+                        <div>
                         {u.status}
-                    </div>
-                </span>
-                <span>
-                      <div>
+                        </div>
+                        </span>
+                        <span>
+                        <div>
                         {/*{u.location.country}*/}
-                    </div>
-                    <div>
+                        </div>
+                        <div>
                         {/*{u.location.city}*/}
-                    </div>
-                </span>
-            </span>
+                        </div>
+                        </span>
+                        </span>
                 </div>
             )}
     </div>

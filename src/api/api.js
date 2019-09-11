@@ -7,6 +7,18 @@ const instance = axios.create({
         "API-KEY": '089ff49d-32c5-46ec-a8bb-409dbb994b7b'
     }
 });
+export const profileAPI = {
+
+    getProfile(userID) {
+        return instance.get(`profile/${userID}`)
+    },
+    getStatus(userID){
+        return instance.get(`profile/status/${userID}`)
+    },
+    updateStatus(status){
+        return instance.put(`profile/status`, {status})
+    }
+};
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
@@ -23,8 +35,9 @@ export const usersAPI = {
 
     },
     getProfile(userID) {
-        return instance.delete(`profile/${userID}`)
+        console.warn('please use ProfileAPI');
 
+        return profileAPI.getProfile(userID)
 
     },
 };

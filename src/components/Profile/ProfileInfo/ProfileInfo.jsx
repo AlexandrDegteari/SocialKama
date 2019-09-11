@@ -5,14 +5,14 @@ import ProfileStatus from "./ProfileStatus";
 
 
 const ProfileInfo = (props) => {
-    // if (!props.profile){
-    //     return <Preloader/>
-    // }
+    if (!props.profile){
+        return <Preloader/>
+    }
         return (
             <div>
                 <div className={c.descriptionBlock}>
-                    {/*<img alt={'avatar'} src={props.profile.photos.large}/>*/}
-                    <ProfileStatus status={'Hello my friends'}/>
+                    <img alt={'avatar'} src={props.profile.photos.large}/>
+                    <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                 </div>
             </div>
 

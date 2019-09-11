@@ -11,7 +11,8 @@ const ProfileInfo = (props) => {
         return (
             <div>
                 <div className={c.descriptionBlock}>
-                    <img alt={'avatar'} src={props.profile.photos.large}/>
+                    <img alt={'avatar'} src={props.profile.photos.large!= null ? props.profile.photos.large :
+                        "http://ib.tsu.ru/wp-content/uploads/2017/10/no-ava-300x300.png"}/>
                     <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
                 </div>
             </div>
